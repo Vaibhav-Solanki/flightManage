@@ -9,12 +9,14 @@ import {
   Stack,
   useColorModeValue,
   Select,
+  useToast,
 } from "@chakra-ui/react";
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 export default function flightEdit() {
+  const toast = useToast();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [first, setfirst] = useState({});
@@ -25,7 +27,13 @@ export default function flightEdit() {
   const handlePost = async (e) => {
     try {
       await axios.post("https://jsmasai.herokuapp.com/flight", first);
-      window.alert("Flight has been added");
+      toast({
+        title: "Flight has been added.",
+        description: "We've added new Flight.",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
       let resFlight = await axios.get("https://jsmasai.herokuapp.com/flight");
       dispatch({ type: "loadFlight", payload: resFlight.data });
       navigate("/");

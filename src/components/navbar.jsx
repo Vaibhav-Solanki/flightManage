@@ -126,7 +126,7 @@ export default function WithSubnavigation() {
             fontSize={"sm"}
             fontWeight={400}
             variant={"link"}
-            href={"#"}
+            onClick={() => naviget("/login")}
           >
             Sign In
           </Button>
@@ -136,7 +136,7 @@ export default function WithSubnavigation() {
             fontWeight={600}
             color={"white"}
             bg={"pink.400"}
-            href={"#"}
+            onClick={() => naviget("/register")}
             _hover={{
               bg: "pink.300",
             }}

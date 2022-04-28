@@ -7,12 +7,14 @@ import {
   Input,
   Stack,
   useColorModeValue,
+  useToast,
 } from "@chakra-ui/react";
 import axios from "axios";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 export default function Routes() {
+  const toast = useToast();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [first, setfirst] = useState({});
@@ -25,7 +27,13 @@ export default function Routes() {
       await axios.post("https://jsmasai.herokuapp.com/routes", first);
       let resRout = await axios.get("https://jsmasai.herokuapp.com/routes");
       dispatch({ type: "loadRoutes", payload: resRout.data });
-      window.alert("Route has been added");
+      toast({
+        title: "Route has been added.",
+        description: "We've added new Route.",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
       navigate("/");
     } catch (error) {
       console.log(error);

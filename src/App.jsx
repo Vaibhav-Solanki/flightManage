@@ -3,6 +3,8 @@ import Home from "./routes/home";
 import Navbar from "./components/navbar";
 import RoutPage from "./routes/Routes";
 import Flight from "./routes/Flight";
+import Login from "./routes/login";
+import Register from "./routes/Register";
 import { Route, Routes } from "react-router-dom";
 import { useEffect } from "react";
 import axios from "axios";
@@ -27,6 +29,8 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/routes" element={<RoutPage />} />
         <Route path="/flight" element={<Flight />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
       </Routes>
     </>
   );
