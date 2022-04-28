@@ -135,10 +135,10 @@ export default function WithSubnavigation() {
             fontSize={"sm"}
             fontWeight={600}
             color={"white"}
-            bg={"pink.400"}
+            bg={"blue.400"}
             onClick={() => naviget("/register")}
             _hover={{
-              bg: "pink.300",
+              bg: "blue.300",
             }}
           >
             Sign Up
