@@ -13,19 +13,21 @@ import {
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 export default function flightEdit() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [first, setfirst] = useState({});
   const HandleIn = (e) => {
     const { id, value } = e.target;
     setfirst({ ...first, [id]: value });
-    console.log(first);
   };
   const handlePost = async (e) => {
     try {
       await axios.post("https://jsmasai.herokuapp.com/flight", first);
       window.alert("Flight has been added");
+      let resFlight = await axios.get("https://jsmasai.herokuapp.com/flight");
+      dispatch({ type: "loadFlight", payload: resFlight.data });
       navigate("/");
     } catch (error) {
       console.log(error);

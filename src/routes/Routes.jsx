@@ -10,18 +10,21 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 export default function Routes() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [first, setfirst] = useState({});
   const HandleIn = (e) => {
     const { id, value } = e.target;
     setfirst({ ...first, [id]: value });
-    console.log(first);
   };
   const handlePost = async (e) => {
     try {
       await axios.post("https://jsmasai.herokuapp.com/routes", first);
+      let resRout = await axios.get("https://jsmasai.herokuapp.com/routes");
+      dispatch({ type: "loadRoutes", payload: resRout.data });
       window.alert("Route has been added");
       navigate("/");
     } catch (error) {
