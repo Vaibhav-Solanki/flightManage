@@ -10,8 +10,27 @@ import {
   useColorModeValue,
   Select,
 } from "@chakra-ui/react";
+import axios from "axios";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 export default function flightEdit() {
+  const navigate = useNavigate();
+  const [first, setfirst] = useState({});
+  const HandleIn = (e) => {
+    const { id, value } = e.target;
+    setfirst({ ...first, [id]: value });
+    console.log(first);
+  };
+  const handlePost = async (e) => {
+    try {
+      await axios.post("https://jsmasai.herokuapp.com/flight", first);
+      window.alert("Flight has been added");
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const routes = useSelector((el) => el.roots);
   return (
     <Flex
@@ -39,31 +58,34 @@ export default function flightEdit() {
             placeholder="Airline name"
             _placeholder={{ color: "gray.500" }}
             type="text"
+            onChange={HandleIn}
           />
         </FormControl>
         <Flex>
-          <FormControl id="start airport" isRequired>
+          <FormControl id="stRout" isRequired>
             <FormLabel>start airport</FormLabel>
             <Select
               placeholder="start airport"
               _placeholder={{ color: "gray.500" }}
+              onChange={HandleIn}
             >
-              {routes.map(({ place, _id }) => (
-                <option value={_id} key={_id}>
+              {routes.map(({ place }, key) => (
+                <option value={place} key={key}>
                   {place}
                 </option>
               ))}
             </Select>
           </FormControl>
           <Spacer />
-          <FormControl id="end airport" isRequired>
+          <FormControl id="enRout" isRequired>
             <FormLabel>end airport</FormLabel>
             <Select
               placeholder="end airport"
               _placeholder={{ color: "gray.500" }}
+              onChange={HandleIn}
             >
-              {routes.map(({ place, _id }) => (
-                <option value={_id} key={_id}>
+              {routes.map(({ place }, key) => (
+                <option value={place} key={key}>
                   {place}
                 </option>
               ))}
@@ -76,32 +98,36 @@ export default function flightEdit() {
             placeholder="cost"
             _placeholder={{ color: "gray.500" }}
             type="number"
+            onChange={HandleIn}
           />
         </FormControl>
         <Flex>
-          <FormControl id="start time" isRequired>
+          <FormControl id="stTime" isRequired>
             <FormLabel>start time</FormLabel>
             <Input
               placeholder="start time"
               _placeholder={{ color: "gray.500" }}
               type="number"
+              onChange={HandleIn}
             />
           </FormControl>
-          <FormControl id="End-time" isRequired>
+          <FormControl id="enTime" isRequired>
             <FormLabel>End-time</FormLabel>
             <Input
               placeholder="End-time"
               _placeholder={{ color: "gray.500" }}
               type="number"
+              onChange={HandleIn}
             />
           </FormControl>
         </Flex>
-        <FormControl id="Capacity" isRequired>
+        <FormControl id="capacity" isRequired>
           <FormLabel>Capacity</FormLabel>
           <Input
             placeholder="Capacity"
             _placeholder={{ color: "gray.500" }}
             type="number"
+            onChange={HandleIn}
           />
         </FormControl>
         <Stack spacing={6} direction={["column", "row"]}>
@@ -112,6 +138,7 @@ export default function flightEdit() {
             _hover={{
               bg: "red.500",
             }}
+            onClick={() => navigate("/")}
           >
             Cancel
           </Button>
@@ -122,6 +149,7 @@ export default function flightEdit() {
             _hover={{
               bg: "blue.500",
             }}
+            onClick={handlePost}
           >
             Submit
           </Button>

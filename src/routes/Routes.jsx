@@ -8,11 +8,25 @@ import {
   Stack,
   useColorModeValue,
 } from "@chakra-ui/react";
+import axios from "axios";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 export default function Routes() {
+  const navigate = useNavigate();
   const [first, setfirst] = useState({});
   const HandleIn = (e) => {
     const { id, value } = e.target;
     setfirst({ ...first, [id]: value });
+    console.log(first);
+  };
+  const handlePost = async (e) => {
+    try {
+      await axios.post("https://jsmasai.herokuapp.com/routes", first);
+      window.alert("Route has been added");
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <Flex
@@ -34,7 +48,7 @@ export default function Routes() {
         <Heading lineHeight={1.1} fontSize={{ base: "2xl", sm: "3xl" }}>
           Airline Add
         </Heading>
-        <FormControl id="AirPort" isRequired>
+        <FormControl id="place" isRequired>
           <FormLabel>AirPort name</FormLabel>
           <Input
             placeholder="AirPort"
@@ -51,6 +65,7 @@ export default function Routes() {
             _hover={{
               bg: "red.500",
             }}
+            onClick={() => navigate("/")}
           >
             Cancel
           </Button>
@@ -61,6 +76,7 @@ export default function Routes() {
             _hover={{
               bg: "blue.500",
             }}
+            onClick={handlePost}
           >
             Submit
           </Button>
