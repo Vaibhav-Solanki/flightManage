@@ -12,6 +12,7 @@ export default function Routes() {
   const [first, setfirst] = useState({});
   const HandleIn = (e) => {
     const { id, value } = e.target;
+    setfirst({ ...first, [id]: value });
   };
   return (
     <Flex
@@ -39,6 +40,7 @@ export default function Routes() {
             placeholder="AirPort"
             _placeholder={{ color: "gray.500" }}
             type="text"
+            onChange={HandleIn}
           />
         </FormControl>
         <Stack spacing={6} direction={["column", "row"]}>
